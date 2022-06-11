@@ -1,0 +1,21 @@
+
+Sensors
+- id (int) (pk)
+- name (string)
+- display_name (string)
+- value (float)
+- time (int)
+
+Users
+- id (int) (pk)
+- username (string)
+- password_hash (string)
+- role (string)
+
+UserConfigs
+- user_id (int) (fk)
+- high_beam (bool)
+- low_beam (bool)
+- ac_temp (float)
+- ac_speed (int)
+- windshield_wiper (bool)

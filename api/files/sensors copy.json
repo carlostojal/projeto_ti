@@ -1,0 +1,32 @@
+[
+    {
+        "name": "inside_temp",
+        "display_name": "Temperatura Interior",
+        "value": 10,
+        "time": 0
+    },
+    {
+        "name": "outside_temp",
+        "display_name": "Temperatura Exterior",
+        "value": 10,
+        "time": 0
+    },
+    {
+        "name": "parking",
+        "display_name": "Sensor de Estacionamento",
+        "value": 10,
+        "time": 0
+    },
+    {
+        "name": "ambient_light",
+        "display_name": "Intensidade da Luz Ambiente",
+        "value": null,
+        "time": 0
+    },
+    {
+        "name": "rain",
+        "display_name": "Chuva",
+        "value": null,
+        "time": 0
+    }
+]

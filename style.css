@@ -1,0 +1,7 @@
+iframe#iframe_fragment {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+}

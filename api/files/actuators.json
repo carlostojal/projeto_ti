@@ -1,0 +1,12 @@
+[
+    {
+        "name": "windshield_wiper",
+        "display_name": "Limpa para-brisas",
+        "value": true
+    },
+    {
+        "name": "headlights",
+        "display_name": "Faróis",
+        "valor": null
+    }
+]

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css" crossorigin="anonymous">
+
+    <title>Manutenção</title>
+  </head>
+  <body>
+    <script src="./script.js"></script>
+    <div class="container-fluid">
+        <h1>Histórico de sensores e atuadores</h1>
+
+        <div id="tables_container">
+        </div>
+    </div>
+    <script>
+
+
+      let table_body = document.getElementById("table_body");
+      let tables_container = document.getElementById("tables_container");
+
+      async function render_history() {
+
+        let history = await get_history();
+
+        let sensorArray = [];
+        sensorArray = history.reduce((r, a) => {
+          r[a.sensor_name] = r[a.sensor_name] || [];
+          r[a.sensor_name].push(a);
+          return r;
+        }, Object.create(null));
+
+        for(const sensor_name in sensorArray) {
+
+          console.log(sensorArray[sensor_name]);
+
+          tables_container.innerHTML += `<h2>${sensor_name}</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Sensor/Atuador</th>
+                <th>Data</th>
+                <th>Valor</th>
+              </tr>
+              <tbody id="table_body_${sensor_name}">
+              </tbody>
+            </thead>
+          </table>`
+
+          sensorArray[sensor_name].forEach((event) => {
+              
+            document.getElementById(`table_body_${sensor_name}`).innerHTML += `<tr>
+              <td>${event.sensor_name}</td>
+              <td>${event.time}</td>
+              <td>${event.value}</td>
+            </tr>`;
+
+          });
+        }
+
+      }
+
+      try {
+        render_history();
+      } catch(e) {
+        alert("Ocorreu um erro ou não é um reparador autorizado.");
+      }
+
+    </script>
+  </body>
+</html>

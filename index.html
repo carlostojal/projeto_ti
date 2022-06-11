@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3">
+    <link href="style.css" rel="stylesheet">
+    <title>Carro Inteligente</title>
+</head>
+<body>
+  <script src="./script.js"></script>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" id="username" href="#">...</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" onclick="set_fragment('climatizacao')">Climatização</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="set_fragment('mapa')">Mapa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="set_fragment('multimedia')">Multimédia</a>
+        </li>
+        <li class="nav-item" id="manutencao">
+          <a class="nav-link" onclick="set_fragment('manutencao')">Manutenção</a>
+        </li>
+      </ul>
+      <button onclick="change_user()" class="btn btn-outline-success my-2 my-sm-0">Mudar Utilizador</button>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <iframe id="iframe_fragment" src="climatizacao.html"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    
+    async function fill_username() {
+
+      let user = await check_session();
+
+      if(user.role != "mechanic") {
+        document.getElementById("manutencao").remove();
+      }
+
+      document.getElementById("username").innerHTML = `Bem vindo, <b>${user.username}</b>`;
+    }
+
+    fill_username();
+
+    function set_fragment(name) {
+
+      const fragment = document.getElementById("iframe_fragment");
+
+      switch(name) {
+        case 'climatizacao':
+          fragment.src = "climatizacao.html";
+          break;
+        case 'mapa':
+          fragment.src = "mapa.html";
+          break;
+        case 'multimedia':
+          fragment.src = "multimedia.html";
+          break;
+        case 'manutencao':
+          fragment.src = "manutencao.html";
+          break;
+      }
+    }
+
+    function change_user() {
+
+      document.cookie = "";
+      document.location.href = "login.html";
+    }
+
+  </script>
+  
+</body>
+</html>
