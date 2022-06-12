@@ -4,7 +4,7 @@
     require_once("./classes/response.php");
     require_once("./classes/auth.php");
     require_once("./classes/sensors.php");
-    require_once("./classes/sensor.php");
+    require_once("./classes/sensor_actuator.php");
 
     $response = new APIResponse();
 

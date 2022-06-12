@@ -1,12 +1,9 @@
 import cv2
 import requests
-import sqlite3
 from face_detection import crop_faces
 from time import time
-import os
 
-API_URL = "http://localhost/capture_webcam.php"
-DATABASE_PATH = "api/files/projeto.db"
+API_URL = "http://localhost/api/sensors.php"
 CASCADE_PATH = "api/files/haarcascade_frontalface_default.xml"
 
 CAPTURE_DESTINATION = "api/files/webcam.jpg"
@@ -14,20 +11,12 @@ CAPTURE_DESTINATION = "api/files/webcam.jpg"
 # initilize camera
 capture = cv2.VideoCapture(0)
 
-# connect to database
-con = sqlite3.connect(DATABASE_PATH)
-cur = con.cursor()
-
 try:
     while True:
         # capture frame
         ret, frame = capture.read()
 
         cv2.imwrite("files/webcam.jpg", frame)
-
-        files = {'frame': ('frame.png', open(CAPTURE_DESTINATION, 'rb'))}
-
-        requests.post(API_URL, files=files)
 
         # display frame
         cv2.imshow("Parking Camera", frame)
@@ -45,8 +34,10 @@ try:
 
         print(faces)
 
-        cur.execute("""UPDATE SensorsActuators SET value = ?, TIME = ? WHERE name = ?""", (len(faces) > 0, int(time()), "face_detection"))
-        con.commit()
+        are_faces_present = len(faces) > 0
+        data = {"name": "face_detection", "value": are_faces_present}
+
+        r = requests.post(API_URL, data=data)
 
         key = cv2.waitKey(50)
 
@@ -59,7 +50,5 @@ except Exception as e:
 finally:
     capture.release()
     cv2.destroyAllWindows()
-    cur.close()
-    con.close()
     print("Execução terminada.")
 

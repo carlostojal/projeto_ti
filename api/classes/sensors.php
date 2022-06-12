@@ -1,7 +1,7 @@
 <?php
 
     require_once("./classes/serializable.php");
-    require_once("./classes/sensor.php");
+    require_once("./classes/sensor_actuator.php");
 
     // this class represents all the sensors and last known values
     class Sensors {
@@ -30,11 +30,14 @@
             $res = $db->query("SELECT * FROM SensorsActuators");
 
             while($row = $res->fetchArray()) {
-                $sensor = new Sensor();
+                $sensor = new SensorActuator();
+                $sensor->id = $row['id'];
                 $sensor->name = $row['name'];
                 $sensor->display_name = $row['display_name'];
                 $sensor->value = $row['value'];
-                $sensor->time = $row['TIME'];
+                $sensor->time = $row['time'];
+                $sensor->type = $row['type'];
+                $sensor->automatic = $row['automatic'];
                 array_push($this->sensors, $sensor);
             }
 
