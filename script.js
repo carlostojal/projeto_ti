@@ -1,4 +1,4 @@
-const API_URL = "./api";
+const API_URL = "http://192.168.1.170/api";
 
 async function get_sensor_data() {
     const response = await fetch(`${API_URL}/sensors.php`);
@@ -68,6 +68,20 @@ async function update_temp(value) {
         method: "POST",
         body: form
     });
+    const data = await response.json();
+    return data.data;
+}
+
+async function set_actuator_automatic(name, value=true) {
+
+    const form = new URLSearchParams();
+    form.append("name", name);
+    form.append("value", value ? 1 : 0);
+
+    const response = await fetch(`${API_URL}/set_automatic.php`, {
+        method: "POST",
+        body: form
+    }); 
     const data = await response.json();
     return data.data;
 }

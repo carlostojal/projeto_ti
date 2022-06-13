@@ -3,7 +3,7 @@
     require_once("./constants.php");
     require_once("./classes/response.php");
     require_once("./classes/auth.php");
-    require_once("./classes/sensors.php");
+    require_once("./classes/sensors_actuators.php");
     require_once("./classes/sensor_actuator.php");
 
     $response = new APIResponse();
@@ -36,7 +36,7 @@
 
             if(isset($_POST['name']) && isset($_POST['display_name'])) {
 
-                $sensors = new Sensors();
+                $sensors = new SensorsActuators();
                 $sensors->load();
 
                 $new_sensor = new Sensor();

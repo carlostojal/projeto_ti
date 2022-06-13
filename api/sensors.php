@@ -4,7 +4,7 @@
 
     require_once("./constants.php");
     require_once("./classes/response.php");
-    require_once("./classes/sensors.php");
+    require_once("./classes/sensors_actuators.php");
     require_once("./classes/history.php");
     require_once("./classes/headlights.php");
     require_once("./classes/ac.php");
@@ -13,7 +13,7 @@
 
     $response = new APIResponse();
 
-    $sensors = new Sensors();
+    $sensors = new SensorsActuators();
     $sensors->load();
 
     // update a sensor value
@@ -40,9 +40,7 @@
             $history->add($event);
             $history->save(LOGS_PATH);
 
-            echo $_POST['value'];
-            http_response_code(200);
-            return;
+            $response->data = $sensors->getValue($_POST['name']);
 
         } else {
             $response->status = 400;
@@ -55,10 +53,7 @@
         if(isset($_GET['name'])) {
                 
             try {
-                echo $sensors->getValue($_GET['name'])->value;
-                http_response_code(200);
-
-                return;
+                $response->data = $sensors->getValue($_GET['name']);
             } catch(Exception $e) {
                 $response->message = $e->getMessage();
                 $response->status = 400;

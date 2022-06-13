@@ -4,7 +4,7 @@
     require_once("./classes/sensor_actuator.php");
 
     // this class represents all the sensors and last known values
-    class Sensors {
+    class SensorsActuators {
 
         public $sensors = [];
 
@@ -75,11 +75,29 @@
 
                     $res = $stmt->execute();
 
+                    $db->close();
+
                     return;
                 }
 
             }
 
+        }
+
+        function setAutomatic($name, $value) {
+
+            $db = new SQLite3(DB_PATH);
+
+            $stmt = $db->prepare("UPDATE SensorsActuators SET automatic=:automatic WHERE name=:name");
+
+            $stmt->bindValue(":automatic", $value);
+            $stmt->bindValue(":name", $name);
+
+            $res = $stmt->execute();
+
+            $db->close();
+
+            return;
         }
 
         function add($sensor) {

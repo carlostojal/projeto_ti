@@ -34,7 +34,7 @@ try:
 
         print(faces)
 
-        are_faces_present = len(faces) > 0
+        are_faces_present = int(len(faces) > 0)
         data = {"name": "face_detection", "value": are_faces_present}
 
         r = requests.post(API_URL, data=data)
