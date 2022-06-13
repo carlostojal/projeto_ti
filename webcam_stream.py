@@ -16,7 +16,7 @@ try:
         # capture frame
         ret, frame = capture.read()
 
-        cv2.imwrite("files/webcam.jpg", frame)
+        cv2.imwrite("api/files/webcam.jpg", frame)
 
         # display frame
         cv2.imshow("Parking Camera", frame)

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Carro Inteligente</title>
+    <script src="jquery-3.6.0.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <script>
+
+      function render() {
+
+        $.get(API_URL + "/sensors.php", (data) => {
+
+          data.data.forEach(sensor => {
+            
+            switch(sensor.name) {
+              case "outside_temp":
+                $("#outside_temp_value").text(`${sensor.value.toFixed(2)}ºC`);
+                $("#outside_temp_icon").attr("src", sensor.value >= 22 ? "quente.png" : "frio.png");
+                $("#outside_temp_update").text(`${new Date(sensor.time * 1000).getHours()}:${new Date(sensor.time * 1000).getMinutes()}`);
+                break;
+              case "rain":
+                $("#rain_value").text(`${(sensor.value * 100).toFixed(2)}%`);
+                $("#rain_update").text(`${new Date(sensor.time * 1000).getHours()}:${new Date(sensor.time * 1000).getMinutes()}`);
+                break;
+            }
+          });
+
+        });
+      }
+
+      $(document).ready(() => {
+
+        setInterval(render, 1000);
+
+      });
+
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">Dashboard - Carro Inteligente</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="seguranca.html">Segurança</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="exterior.html">Exterior</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="historico.html">Histórico</a>
+              </li>
+            </ul>
+            <a class="btn btn-outline-success" href="logout.html">Logout</a>
+          </div>
+        </div>
+      </nav>
+      <br>
+      <br>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <p><b>Temperatura Exterior: </b><span id="outside_temp_value"></span></p>
+                    </div>
+                    <div class="card-body">
+                        <!--Colocar quente ou frio dependedo da luz-->
+                        <img id="outside_temp_icon" style="width: 50%;" src="quente.png" class="card-img-top" alt="Temperatura Exterior">
+                    </div>
+                    <div class="card-footer" style="text-align: center;">
+                        <p><b>Atualização: </b><span id="outside_temp_update"></span></p>
+                    </div>
+                  </div>
+                </div>
+            <div class="col-sm-6">
+                <div class="card" >
+                    <div class="card-header">
+                        <p><b>Humidade: </b><span id="rain_value"></span></p>
+                    </div>
+                    <div class="card-body">
+                        <img style="width: 50%;"src="chuva.png" class="card-img-top"alt="Humidade" >
+                    </div>
+                    <div class="card-footer" style="text-align: center;">
+                        <p><b>Atualização: </b><span id="rain_update"></span></p>
+                    </div>
+                  </div>
+            </div>
+          </div>
+    </div>
+    </div>
+    <br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

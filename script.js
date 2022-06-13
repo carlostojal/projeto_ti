@@ -1,4 +1,4 @@
-const API_URL = "http://192.168.1.170/api";
+const API_URL = "http://localhost/api";
 
 async function get_sensor_data() {
     const response = await fetch(`${API_URL}/sensors.php`);
